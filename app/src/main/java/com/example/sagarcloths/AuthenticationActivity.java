@@ -93,35 +93,28 @@ public class AuthenticationActivity extends AppCompatActivity {
           resetPassword.setView(myView);
           final AlertDialog alertDialog = resetPassword.create();
           alertDialog.setCanceledOnTouchOutside(false);
-              enterMail = resetPassTxt.getText().toString();
-
-          resetPassTxt.addTextChangedListener(new TextWatcher() {
-              @Override
-              public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-              }
-
-              @Override
-              public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-              }
-
-              @Override
-              public void afterTextChanged(Editable editable) {
-                  if (Character.isDigit(enterMail.indexOf(0))){
-                      resetPassTxt.setText("+"+91+enterMail);
-                      enterMail = resetPassTxt.getText().toString();
-                  }
-              }
-          });
-
 
           reset.setOnClickListener(new View.OnClickListener() {
               @Override
               public void onClick(View view) {
+                  enterMail = resetPassTxt.getText().toString();
+
+                  int a=0;
+                  for (int n=0;n<=enterMail.length()-1;n++ ){
+                      if (!Character.isDigit(enterMail.charAt(n))){
+                          a++;
+                          break;
+                      }
+                  }
+
                if (enterMail.isEmpty()){
                    Toast.makeText(getApplicationContext(), "Enter Email or Phone no.", Toast.LENGTH_SHORT).show();
                }
+               else if (a==0){
+                   Toast.makeText(getApplicationContext(), "its a phone no.", Toast.LENGTH_SHORT).show();
+                   enterMail = "+"+91+enterMail;
+               }
+               else{
                auth.sendPasswordResetEmail(enterMail).addOnCompleteListener(new OnCompleteListener<Void>() {
                    @Override
                    public void onComplete(@NonNull Task<Void> task) {
@@ -131,7 +124,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                        alertDialog.dismiss();
                    }
                        else {
-                           Toast.makeText(getApplicationContext(),task.getException()+"",Toast.LENGTH_SHORT).show();
+                           Toast.makeText(getApplicationContext(),task.getException().getMessage()+"",Toast.LENGTH_SHORT).show();
 
                        }
                    }
@@ -141,7 +134,7 @@ public class AuthenticationActivity extends AppCompatActivity {
                        Toast.makeText(getApplicationContext(), e.getMessage()+"", Toast.LENGTH_SHORT).show();
                    }
                });
-              }
+              }}
           });
 
           cancel.setOnClickListener(view -> alertDialog.dismiss());
@@ -149,4 +142,5 @@ public class AuthenticationActivity extends AppCompatActivity {
           alertDialog.show();
 
     }
+
 }
