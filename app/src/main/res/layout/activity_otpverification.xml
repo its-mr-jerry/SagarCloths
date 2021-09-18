@@ -8,6 +8,19 @@
     tools:context=".OTPverification">
 
     <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="548dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/editTextVie"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +47,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextVie" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/otpSentOn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -51,6 +64,7 @@
         android:layout_marginBottom="324dp"
         android:ems="10"
         android:inputType="number"
+        android:minHeight="48dp"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -8,13 +8,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/ic_launcher_background"
-        android:orientation="horizontal" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="670dp"
+        android:layout_height="match_parent"
         android:background="@color/Sagar_main" />
 
 </LinearLayout>

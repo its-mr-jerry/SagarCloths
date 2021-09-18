@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@color/Sagar_main"
     android:orientation="vertical"
-    tools:context=".AuthenticationActivity">
+    tools:context=".AuthenticationActivity"
+    android:id="@+id/mainLayout">
 
     <EditText
         android:id="@+id/email"
@@ -115,4 +116,18 @@
             android:cropToPadding="false"
             app:srcCompat="@drawable/facebook" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/PhoneSignIn"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="164dp"
+        android:text="Sign In with Phone"
+        android:textSize="22sp"
+        android:textStyle="bold" />
 </RelativeLayout>

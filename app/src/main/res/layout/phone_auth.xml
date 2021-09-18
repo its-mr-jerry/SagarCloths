@@ -1,38 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@color/Sagar_main"
     android:orientation="vertical">
 
-    <EditText
+    <TextView
         android:id="@+id/editTextTextPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:ems="10"
-        android:hint="New Password"
-        android:inputType="textPassword" />
+        android:text="Enter your Phone No."
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/PhoneNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginRight="10dp"
         android:ems="10"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:minHeight="48dp" />
+        android:hint="Phone No."
+        android:minHeight="48dp"
+        android:text="+91" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/getOtp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:background="@color/ic_launcher_background"
-        android:text="Save" />
+        android:text="GET OTP" />
 </LinearLayout>
