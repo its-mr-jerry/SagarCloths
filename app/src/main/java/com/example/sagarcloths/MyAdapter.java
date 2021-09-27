@@ -23,7 +23,7 @@ public class MyAdapter extends FirebaseRecyclerAdapter<Model,MyAdapter.holder> {
 
 
         holder.detail.setText(model.getName());
-        holder.price.setText(String.valueOf(model.getPrice()));
+        holder.price.setText("Price "+String.valueOf(model.getPrice()));
         holder.send.setBackgroundResource(R.drawable.ic_baseline_send_24);
         Glide.with(holder.homePic.getContext()).load(model.getPurl()).into(holder.homePic);
     }

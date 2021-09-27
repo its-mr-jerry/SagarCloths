@@ -2,8 +2,8 @@ package com.example.sagarcloths;
 
 
 public class Model {
-    String Name, Purl;
-    long Price;
+    private String Name, Purl;
+    private long Price;
 
     public Model(){}
 

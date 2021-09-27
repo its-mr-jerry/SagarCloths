@@ -33,7 +33,7 @@ public class HomeFragment extends Fragment {
     private String mParam2;
     RecyclerView recView;
     MyAdapter adapter;
-    DatabaseReference database;
+
     Model model;
 
 
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
 
         FirebaseRecyclerOptions<Model> options =
                 new FirebaseRecyclerOptions.Builder<Model>()
-                        .setQuery(FirebaseDatabase.getInstance().getReference().child("New Item"), Model.class)
+                        .setQuery(FirebaseDatabase.getInstance("https://sagar-cloth-default-rtdb.asia-southeast1.firebasedatabase.app/").getReference().child("New Item"), Model.class)
                         .build();
           adapter = new MyAdapter(options);
           recView.setAdapter(adapter);
