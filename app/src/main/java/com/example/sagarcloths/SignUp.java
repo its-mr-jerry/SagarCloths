@@ -23,6 +23,7 @@ import com.google.firebase.auth.EmailAuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
@@ -89,36 +90,50 @@ public class SignUp extends AppCompatActivity {
         if (password.getText().toString().equals(cnfPassword.getText().toString())) {
             pass = cnfPassword.getText().toString();
             String emaill = email.getText().toString();
-            System.out.println(emaill + pass);
+
 
             auth.createUserWithEmailAndPassword(emaill, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                    FirebaseUser user = auth.getCurrentUser();
                     if (task.isSuccessful()) {
                         Toast.makeText(SignUp.this, "Account created Successfully", Toast.LENGTH_SHORT).show();
 
-                        FirebaseUser user = auth.getCurrentUser();
-                        user.sendEmailVerification().addOnCompleteListener(SignUp.this, task1 -> {
-                            if (task1.isSuccessful()) {
-                                Toast.makeText(SignUp.this, "Email verification link sent to your Email", Toast.LENGTH_SHORT).show();
-                                updateUI(user);
-                            } else {
-                                Toast.makeText(SignUp.this, task1.getException() + "", Toast.LENGTH_SHORT).show();
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(SignUp.this, "Email verification link sent to your Email", Toast.LENGTH_SHORT).show();
+                                    updateUI(user);
+                                } else {
+                                    Toast.makeText(SignUp.this, task.getException().getMessage() + "", Toast.LENGTH_SHORT).show();
+                                }
                             }
-
                         });
-                    } else {
-                        Toast.makeText(SignUp.this, task.getException() + "", Toast.LENGTH_SHORT).show();
+                    } else if(task.getException()instanceof FirebaseAuthUserCollisionException && user.isEmailVerified() ) {
+                       Toast.makeText(getApplicationContext(),"You arlready have an account",Toast.LENGTH_SHORT).show();
+                    }
+                    else if(task.getException()instanceof FirebaseAuthUserCollisionException){
+                        user.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Toast.makeText(getApplicationContext(), "Verification Link sent to your Email", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    Toast.makeText(getApplicationContext(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
                     }
                 }
             });
-
-        }
-    }
-
+        }}
     private void updateUI(FirebaseUser Account) {
+
         if (Account != null) {
-            intent = new Intent(this, AuthenticationActivity.class);
+            intent = new Intent(this,AuthenticationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
             Toast.makeText(SignUp.this, "Something wrong in Creating Account", Toast.LENGTH_SHORT).show();

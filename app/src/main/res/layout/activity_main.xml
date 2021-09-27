@@ -79,19 +79,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/rel"
             android:layout_weight="9.9"
             android:background="@color/ic_launcher_background"
             android:baselineAligned="true"
             android:orientation="vertical">
 
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/fragmentContainerView2"
                 android:name="com.example.sagarcloths.fragments.HomeFragment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/ic_launcher_background" />
-
+                android:layout_height="match_parent"
+                android:layout_marginTop="2dp"
+                android:background="@color/Sagar_main" />
         </LinearLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -104,9 +104,9 @@
     </LinearLayout>
 
     <!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:layout_width="200dp"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:background="@color/Sagar_main" />-->
+    <!--        android:layout_width="200dp"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_gravity="start"-->
+    <!--        android:background="@color/Sagar_main" />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>
