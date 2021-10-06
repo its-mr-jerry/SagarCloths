@@ -1,16 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ic_launcher_background"
     android:orientation="vertical"
     tools:context=".fragments.HomeFragment">
 
+    <RelativeLayout
+        android:id="@+id/rel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight=".1"
+        android:background="@color/Sagar_main"
+        app:layout_constraintBottom_toTopOf="@+id/recView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="44dp"
+            android:layout_height="37dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="354dp"
+            app:srcCompat="@drawable/ic_baseline_format_align_justify_24" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="40dp"
+            android:layout_height="39dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="358dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="13dp"
+            app:srcCompat="@drawable/ic_baseline_shopping_cart_24" />
+
+        <SearchView
+            android:id="@+id/searchbar"
+            android:layout_width="385dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="end" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="57dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="151dp"
+            android:fontFamily="@font/aclonica"
+            android:text="Sagar Cloths"
+            android:textSize="26sp"
+            android:textStyle="bold|italic" />
+
+    </RelativeLayout>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/sagarlogosplash" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/sagarlogosplash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rel" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
