@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SagarCloths">
         <activity
+            android:name=".UserInfo"
+            android:exported="true" />
+        <activity
             android:name=".Profile"
             android:exported="true" />
         <activity
