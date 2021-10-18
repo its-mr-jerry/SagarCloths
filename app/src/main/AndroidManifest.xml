@@ -15,9 +15,6 @@
             android:name=".UserInfo"
             android:exported="true" />
         <activity
-            android:name=".Profile"
-            android:exported="true" />
-        <activity
             android:name=".OTPverification"
             android:exported="true" />
         <activity

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.AuthResult;
@@ -20,13 +21,19 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.jar.Attributes;
 
 public class OTPverification extends AppCompatActivity {
-    private TextView otpSentOn,timer;
+    private TextView otpSentOn, timer;
     String phoneNO;
     EditText otp;
     private Button submit, resend;
@@ -43,9 +50,9 @@ public class OTPverification extends AppCompatActivity {
         submit = findViewById(R.id.submit);
         resend = findViewById(R.id.resend);
         otp = findViewById(R.id.otp);
-        timer=findViewById(R.id.timer);
+        timer = findViewById(R.id.timer);
 
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         phoneNO = getIntent().getStringExtra("phoneNo.");
         otpSentOn.setText(phoneNO);
@@ -66,9 +73,38 @@ public class OTPverification extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    Intent intent = new Intent(OTPverification.this, MainActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                    startActivity(intent);
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("phone");
+                                    ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child(phoneNO).child(phoneNO).exists() && snapshot.child(phoneNO).child("Name").exists()) {
+                                                Intent intent = new Intent(OTPverification.this, MainActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                            } else {
+                                                ref.child(phoneNO).child(phoneNO).setValue(phoneNO).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<Void> task) {
+                                                        Toast.makeText(getApplicationContext(), "Phone no. added successfully", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }).addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Toast.makeText(getApplicationContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                                Intent intent = new Intent(OTPverification.this, UserInfo.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                startActivity(intent);
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+
                                 } else {
                                     Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
@@ -91,7 +127,7 @@ public class OTPverification extends AppCompatActivity {
 
             @Override
             public void onCodeSent(@NonNull String newOtpBackend, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-                otpBackend=newOtpBackend;
+                otpBackend = newOtpBackend;
                 Toast.makeText(getApplicationContext(), "OTP sent", Toast.LENGTH_SHORT).show();
             }
 
@@ -106,8 +142,8 @@ public class OTPverification extends AppCompatActivity {
             }
         }
         ;
-
     }
+
     private void createAccountWithPhone() {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(auth)
@@ -119,13 +155,15 @@ public class OTPverification extends AppCompatActivity {
         PhoneAuthProvider.verifyPhoneNumber(options);
 
     }
-    private void timer(){
+
+    private void timer() {
         new CountDownTimer(45000, 1000) {
             public void onTick(long millisUntilFinished) {
                 NumberFormat f = new DecimalFormat("00");
                 long sec = (millisUntilFinished / 1000) % 60;
-                timer.setText("Resend after "+f.format(sec));
+                timer.setText("Resend after " + f.format(sec));
             }
+
             public void onFinish() {
                 timer.setText("00");
                 resend.setClickable(true);
